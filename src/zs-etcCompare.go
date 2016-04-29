@@ -14,7 +14,7 @@ var usage string = `
 A tool designed to compare Zend Server's "etc" directories - all .ini files, directive by directive.
 
 Usage:
-       comparETC <output mode> <old etc path> <new etc path>
+       zs-etcCompare <output mode> <old etc path> <new etc path>
 
 "output mode" should be one of:
   help            - print these usage instructions
