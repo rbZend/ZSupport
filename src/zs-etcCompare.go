@@ -1,13 +1,13 @@
 package main
 
 import (
+	"encoding/json"
 	"flag"
 	"fmt"
 	"github.com/go-ini/ini"
 	"os"
 	"path/filepath"
 	"strings"
-	"encoding/json"
 )
 
 var usage string = `
@@ -60,13 +60,13 @@ func mergeStringMaps(m1 map[string]string, m2 map[string]string) map[string]stri
 	return m1
 }
 
-func getDirectories () (string, string) {
+func getDirectories() (string, string) {
 	old := flag.Arg(1)
 	new := flag.Arg(2)
 	return old, new
 }
 
-func parseDir (dir string) map[string]string {
+func parseDir(dir string) map[string]string {
 	iniObject = ini.Empty()
 	_ = filepath.Walk(dir, iniList)
 	sections := iniObject.SectionStrings()
@@ -77,7 +77,7 @@ func parseDir (dir string) map[string]string {
 	return KVpairs
 }
 
-func getDiff () map[string]map[string]string {
+func getDiff() map[string]map[string]string {
 	oldEtc, newEtc := getDirectories()
 	var oldCfg = make(map[string]string, 1000)
 	var newCfg = make(map[string]string, 1000)
@@ -90,19 +90,19 @@ func getDiff () map[string]map[string]string {
 		if vO, ok := oldCfg[kN]; ok {
 			// directive from New exists in Old
 			if vO != vN {
-				diffCfg[kN] = map[string]string{"old":vO, "new":vN}
+				diffCfg[kN] = map[string]string{"old": vO, "new": vN}
 			}
 			delete(oldCfg, kN)
 
 		} else {
 			// directive from New doesn't exist in Old
-			diffCfg[kN] = map[string]string{"old":"__undefined__", "new":vN}
+			diffCfg[kN] = map[string]string{"old": "__undefined__", "new": vN}
 		}
 	}
 
 	// directives from Old that don't exist in New
 	for kO, vO := range oldCfg {
-		diffCfg[kO] = map[string]string{"old":vO, "new":"__undefined__"}
+		diffCfg[kO] = map[string]string{"old": vO, "new": "__undefined__"}
 	}
 
 	return diffCfg
@@ -114,7 +114,7 @@ func produceHuman() string {
 	for key, values := range data {
 		o, _ := values["old"]
 		n, _ := values["new"]
-		formatted = formatted + fmt.Sprintf("%s:\n      old:  %s\n      new:  %s\n\n", key, o, n)
+		formatted += fmt.Sprintf("%s:\n      old:  %s\n      new:  %s\n\n", key, o, n)
 	}
 	return formatted
 }
@@ -124,8 +124,32 @@ func produceJson() string {
 	return fmt.Sprintf("%s", jList)
 }
 func produceHtml() string {
-	//fmt.Printf("|%-60s|%-6s|\n", "foo00000000000", "b")
-	return "Not implemented yet"
+	data := getDiff()
+	var formatted string = `<!DOCTYPE html>
+<html>
+<head>
+	<title>Zend Server's "etc" comparison results</title>
+	<style>
+		body {background: #BDE; font: 10pt arial, sans-serif;}
+		table {margin: 15px}
+		th, h1 {font-weight: bold; text-align: center; background: #7BC;}
+		tr:nth-child(even) {background: #CCC}
+		tr:nth-child(odd) {background: #FFF}
+	</style>
+</head>
+<body>
+<h1>Zend Server's <em>etc</em> comparison results</h1>
+<table>
+`
+	oldEtc, newEtc := getDirectories()
+	formatted += fmt.Sprintf("<tr><th>Directive</th><th>Old Value<br>%s</th><th>New Value<br>%s</th></tr>\n", oldEtc, newEtc)
+	for key, values := range data {
+		o, _ := values["old"]
+		n, _ := values["new"]
+		formatted += fmt.Sprintf("<tr><td>%s</td><td>%s</td><td>%s</td></tr>\n", key, o, n)
+	}
+	formatted += "</table>\n</body>"
+	return formatted
 }
 func produceCsv() string {
 	data := getDiff()
@@ -133,7 +157,8 @@ func produceCsv() string {
 	for key, values := range data {
 		o, _ := values["old"]
 		n, _ := values["new"]
-		formatted = formatted + fmt.Sprintf("\"%s\",\"%s\",\"%s\"\n", key, o, n)
+		formatted += fmt.Sprintf("\"%s\",\"%s\",\"%s\"\n", key, o, n)
 	}
 	return formatted
 }
+
