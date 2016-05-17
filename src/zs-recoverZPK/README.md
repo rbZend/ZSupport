@@ -2,6 +2,8 @@
 
 A tool designed to list and/or extract ZPK files from Zend Server's database.
 
+**Note:** recovery from MySQL (cluster) database is not implemented yet
+
 `zs-recoverZPK [parameters]`
 
 Parameters:
