@@ -4,6 +4,7 @@ import (
 	"database/sql"
 	"fmt"
 	_ "github.com/mattn/go-sqlite3"
+	_ "github.com/go-sql-driver/mysql"
 	"log"
 	"os"
 	"flag"
@@ -25,19 +26,24 @@ Parameters:
        -s, --source
            database source. One of:
            sqlite://path/to/deployment.db
-           mysql://user:password@host[:port]/database
+           mysql://user:password@protocol(host:port|path)/database
 
        -z, --zpkID
-           ID of the package that needs to be recovered
+           ID of the package that needs to be recovered.
+           If ZPK ID (package ID) is not specified, the tool will
+           display the list of applications in the database.
 
        -o, --otputDir        default = . (current directory)
            directory where the ZPK will be saved
 
-Example:
-       $ cd /usr/local/zend/bin
-       $ zs-recoverZPK --zpkID=17 --source=sqlite://../var/db/deployment.db -o ~/Desktop
+Examples:
 
-If ZPK ID (package ID) is not specified, the tool will display the list of applications in the database.
+       $ cd /usr/local/zend/bin
+       $ zs-recoverZPK --zpkID=17 --source=sqlite://../var/db/deployment.db --otputDir=~/Desktop
+
+       $ zs-recoverZPK -z 17 -s 'mysql://root:passw0rd@unix(/var/run/mysqld/mysqld.sock)/ZendServer'
+
+       $ zs-recoverZPK -z 17 -s 'mysql://root:passw0rd@tcp(192.168.5.150:13306)/ZendServer'
 
 `
 
@@ -73,9 +79,24 @@ func main() {
 	default:
 		fmt.Println(usage)
 	case "mysql":
-		fmt.Println("I'll add it soon...")
+		// opening the DB
+		db, err := sql.Open("mysql", param[1])
+		check(err)
+		defer db.Close()
+
+		actionSelector(db)
 	case "sqlite":
-		sqliteMan(param[1])
+		if _, err := os.Stat(param[1]); err != nil {
+			fmt.Println("\nThe specified file path either does not exist or is not accessible.\n\n")
+			return
+		}
+
+		// opening the DB
+		db, err := sql.Open("sqlite3", param[1])
+		check(err)
+		defer db.Close()
+
+		actionSelector(db)
 	}
 
 }
@@ -253,22 +274,4 @@ func actionSelector(db *sql.DB) {
 	} else if outputDirExist() {
 		DBrecoverZPK(db)
 	}
-}
-
-func sqliteMan(path string) {
-
-	if _, err := os.Stat(path); err != nil {
-		fmt.Println("\nThe specified file path either does not exist or is not accessible.\n\n")
-		return
-	}
-
-	// opening the DB
-	db, err := sql.Open("sqlite3", path)
-	check(err)
-	defer db.Close()
-
-	actionSelector(db)
-	
-
-
 }
