@@ -161,4 +161,3 @@ func produceCsv() string {
 	}
 	return formatted
 }
-

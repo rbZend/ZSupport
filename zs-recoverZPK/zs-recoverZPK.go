@@ -1,19 +1,19 @@
 package main
 
 import (
+	"archive/zip"
+	"bufio"
 	"database/sql"
+	"encoding/xml"
+	"flag"
 	"fmt"
-	_ "github.com/mattn/go-sqlite3"
 	_ "github.com/go-sql-driver/mysql"
+	_ "github.com/mattn/go-sqlite3"
 	"log"
 	"os"
-	"flag"
-	"strings"
-	"bufio"
-	"time"
-	"archive/zip"
-	"encoding/xml"
 	"regexp"
+	"strings"
+	"time"
 )
 
 var usage string = `
@@ -50,8 +50,6 @@ Examples:
 var appID int = 0
 var source string = ""
 var outDir string = ""
-
-
 
 func check(e error) {
 	if e != nil {
@@ -119,7 +117,6 @@ func SafeFileName(str string) string {
 	return name
 }
 
-
 func DBprintList(db *sql.DB) {
 	var SQL_list string = `SELECT package_id, name, version FROM deployment_packages
 WHERE (package_id IN (SELECT package_id FROM deployment_package_data)
@@ -172,7 +169,7 @@ func DBrecoverZPK(db *sql.DB) {
 	}
 
 	// opening the temporary file for writing
-	var tmpFile string = outDir + fmt.Sprintf("%c",os.PathSeparator) + "ZPK_TMP_output_" + time.Now().Format("2006-01-02_15.04.05") + ".zip"
+	var tmpFile string = outDir + fmt.Sprintf("%c", os.PathSeparator) + "ZPK_TMP_output_" + time.Now().Format("2006-01-02_15.04.05") + ".zip"
 	fh, err := os.OpenFile(tmpFile, os.O_RDWR|os.O_APPEND|os.O_CREATE|os.O_TRUNC, 0644)
 	check(err)
 	wr := bufio.NewWriter(fh)
@@ -196,11 +193,11 @@ func DBrecoverZPK(db *sql.DB) {
 		_, err = wr.Write(chunk_blob)
 
 		// the first chunk will always be written to disk, although the buffer is not full yet - kind of "fail early"
-		if (key % bufferSize) == 0 || (key + 1) == size{
+		if (key%bufferSize) == 0 || (key+1) == size {
 			// dump buffer to disk
 			err = wr.Flush()
 			check(err)
-			fmt.Printf("\n ... written %d chunks of %d", key + 1, size)
+			fmt.Printf("\n ... written %d chunks of %d", key+1, size)
 		}
 
 		chunk_stmt.Close()
@@ -232,7 +229,7 @@ func DBrecoverZPK(db *sql.DB) {
 	}
 
 	type AppData struct {
-		AppName string `xml:"name"`
+		AppName    string `xml:"name"`
 		AppVersion string `xml:"version>release"`
 	}
 
@@ -241,7 +238,7 @@ func DBrecoverZPK(db *sql.DB) {
 	check(err)
 
 	outFileName := fmt.Sprintf("%s-ver.%s_recovered_id%d_%s.zpk", unXML.AppName, unXML.AppVersion, appID, time.Now().Format("2006-01-02_15.04.05"))
-	outFile := outDir + fmt.Sprintf("%c",os.PathSeparator) + SafeFileName(outFileName)
+	outFile := outDir + fmt.Sprintf("%c", os.PathSeparator) + SafeFileName(outFileName)
 
 	err = os.Rename(tmpFile, outFile)
 	check(err)
@@ -250,7 +247,7 @@ func DBrecoverZPK(db *sql.DB) {
 
 }
 
-func outputDirExist () bool {
+func outputDirExist() bool {
 	if outDir == "" {
 		outDir = "."
 	}
@@ -259,16 +256,15 @@ func outputDirExist () bool {
 		fmt.Println("\nThe specified output directory either does not exist or is not accessible.\n\n")
 		return false
 	}
-	if ! dirinfo.IsDir() {
+	if !dirinfo.IsDir() {
 		fmt.Println("\nThe specified output directory doesn't seem to be a directory.\n\n")
 		return false
 	}
 	return true
 }
 
-
 func actionSelector(db *sql.DB) {
-	
+
 	if appID == 0 {
 		DBprintList(db)
 	} else if outputDirExist() {
