@@ -8,12 +8,10 @@
 ### 4. Verbose output / logging
 ### 5. Cloning of multiple repositories in one pass
 
-
+if [ $# -eq 0 ]
+then
 
 cat <<EOS
-
-
-
 This script will copy the selected repository to current directory:
 $PWD
 
@@ -52,6 +50,10 @@ Select the repository to copy:
 EOS
 
 echo -e "Input your selection [c] : \c"
+
+else
+choice=$1
+fi
 
 read -r choice
 case $choice in
@@ -143,6 +145,9 @@ done < ZS$ZS-$OS-$ARCH-repo-files.list
 
 cd ..
 
+if [ $# -eq 0 ]
+then
+
 echo -e "\e[1m\e[31m"
 cat <<EOT
 
@@ -222,7 +227,7 @@ echo -e "\e[2m-------------------------------------------------------------\e[1m
 echo -e "$repoText"
 echo -e "\e[0m\e[2m-------------------------------------------------------------\e[0m"
 
-
+fi
 
 exit 0
 
