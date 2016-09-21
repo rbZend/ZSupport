@@ -50,12 +50,11 @@ Select the repository to copy:
 EOS
 
 echo -e "Input your selection [c] : \c"
-
+read -r choice
 else
 choice=$1
 fi
 
-read -r choice
 case $choice in
 	# RHEL
 	("103") export ZS="6.3"; export FL=rpm; export Rs="i386|noarch"; export OS="RHEL"; export ARCH="32bit";;
