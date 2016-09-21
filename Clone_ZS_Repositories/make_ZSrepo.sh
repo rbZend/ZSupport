@@ -8,12 +8,10 @@
 ### 4. Verbose output / logging
 ### 5. Cloning of multiple repositories in one pass
 
-
+if [ $# -eq 0 ]
+then
 
 cat <<EOS
-
-
-
 This script will copy the selected repository to current directory:
 $PWD
 
@@ -39,7 +37,7 @@ Select the repository to copy:
    203) ZS 6.3 - 32 bit                  318) ZS 8.0 - 64 bit (openSSL 0.9.8)
    204) ZS 6.3 - 64 bit                  319) ZS 8.0 - 64 bit (openSSL 1.0)
    205) ZS 7.0 - 32 bit                  320) ZS 8.0 - 64 bit (Apache 2.4)
-   206) ZS 7.0 - 64 bit                  321) ZS 8.0 - power8  
+   206) ZS 7.0 - 64 bit                  321) ZS 8.0 - power8
    207) ZS 8.0 - 32 bit               .. 322) ZS 8.5 - 32 bit (openSSL 1.0)
    208) ZS 8.0 - 64 bit                  323) ZS 8.5 - 32 bit (Apache 2.4)
    209) ZS 8.5 - 32 bit                  324) ZS 8.5 - 64 bit (openSSL 1.0)
@@ -52,9 +50,12 @@ Select the repository to copy:
 EOS
 
 echo -e "Input your selection [c] : \c"
+read -r choice
+else
+choice=$1
+fi
 
-read choice
-case $(echo $choice) in
+case $choice in
 	# RHEL
 	("103") export ZS="6.3"; export FL=rpm; export Rs="i386|noarch"; export OS="RHEL"; export ARCH="32bit";;
 	("104") export ZS="6.3"; export FL=rpm; export Rs="x86_64|noarch"; export OS="RHEL"; export ARCH="64bit";;
@@ -130,16 +131,21 @@ esac
 wget -nv http://repos.zend.com/zend.key -O zend.key
 
 mkdir -p $OS-ZS$ZS
-cd $OS-ZS$ZS
+cd $OS-ZS$ZS || exit
 wget -nv -O - http://repos.zend.com/zend-server/$ZS/files.lst | grep -E "^$FL/($Rs)" > ZS$ZS-$OS-$ARCH-repo-files.list
 sed -i "s@^$FL/@@g" ZS$ZS-$OS-$ARCH-repo-files.list
 
-for file in $(cat ZS$ZS-$OS-$ARCH-repo-files.list); do
-	mkdir -p $(dirname $file)
-	wget  -P $(dirname $file) -nv "http://repos.zend.com/zend-server/$ZS/$FL/$file"
-done
+while read -r file
+do
+        dirname=$(dirname "$file")
+	mkdir -p "$dirname"
+	wget  -P "$dirname" -nv "http://repos.zend.com/zend-server/$ZS/$FL/$file"
+done < ZS$ZS-$OS-$ARCH-repo-files.list
 
 cd ..
+
+if [ $# -eq 0 ]
+then
 
 echo -e "\e[1m\e[31m"
 cat <<EOT
@@ -157,7 +163,7 @@ echo -e "\e[0mPlease enter the URL of this directory - it will be used to output
 echo -e "For example: \e[33mhttp://\e[1m192.168.0.17/ZS_local_repo\e[39m"
 echo
 echo -e "\e[4mhttp://\c"
-read URL
+read -r URL
 echo
 echo
 
@@ -165,7 +171,7 @@ echo
 repoFile="/etc/apt/sources.list.d/zend_local.list"
 repoText="deb http://$URL/$OS-ZS$ZS server non-free"
 
-if [ "$FL" = "rpm" -o "$FL" = "rpm_apache2.4" ]; then
+if [ "$FL" = "rpm" ] || [ "$FL" = "rpm_apache2.4" ]; then
 	archReal=$(cut -d"|" -f1 <<< "$Rs")
 	archNo=$(cut -d"|" -f2 <<< "$Rs")
 	repoFile="/etc/yum.repos.d/zend_local.repo"
@@ -217,14 +223,14 @@ fi
 echo -e "\e[0mSave the text between the lines as \e[1m$repoFile\e[0m :"
 
 echo -e "\e[2m-------------------------------------------------------------\e[1m\e[32m"
-echo -e $repoText
+echo -e "$repoText"
 echo -e "\e[0m\e[2m-------------------------------------------------------------\e[0m"
 
-
+fi
 
 exit 0
 
-
+cat << EOS
 ================================================
 Old repos:
 ================================================
@@ -232,8 +238,8 @@ Old repos:
    101) ZS 5.6 - 32 bit                  301) ZS 5.6 - 32 bit (openSSL 0.9.8)
    102) ZS 5.6 - 64 bit                  302) ZS 5.6 - 64 bit (openSSL 0.9.8)
 
-   201) ZS 5.6 - 32 bit               
-   202) ZS 5.6 - 64 bit               
+   201) ZS 5.6 - 32 bit
+   202) ZS 5.6 - 64 bit
 
 	("101") export ZS="5.6"; export FL=rpm; export Rs="i386|noarch"; export OS="RHEL"; export ARCH="32bit";;
 	("102") export ZS="5.6"; export FL=rpm; export Rs="x86_64|noarch"; export OS="RHEL"; export ARCH="64bit";;
@@ -245,3 +251,4 @@ Old repos:
 	("302") export ZS="5.6"; export FL=deb; export Rs=".*_all.deb$|.*_amd64.deb$|dists/.*"; export OS="Debian"; export ARCH="64bit";;
 
 ================================================
+EOS
