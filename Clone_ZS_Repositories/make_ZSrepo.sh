@@ -37,7 +37,7 @@ Select the repository to copy:
    203) ZS 6.3 - 32 bit                  318) ZS 8.0 - 64 bit (openSSL 0.9.8)
    204) ZS 6.3 - 64 bit                  319) ZS 8.0 - 64 bit (openSSL 1.0)
    205) ZS 7.0 - 32 bit                  320) ZS 8.0 - 64 bit (Apache 2.4)
-   206) ZS 7.0 - 64 bit                  321) ZS 8.0 - power8
+   206) ZS 7.0 - 64 bit                  321) ZS 8.0 - power8  
    207) ZS 8.0 - 32 bit               .. 322) ZS 8.5 - 32 bit (openSSL 1.0)
    208) ZS 8.0 - 64 bit                  323) ZS 8.5 - 32 bit (Apache 2.4)
    209) ZS 8.5 - 32 bit                  324) ZS 8.5 - 64 bit (openSSL 1.0)
@@ -65,15 +65,15 @@ case $choice in
 
 	("107") export ZS="8.0"; export FL=rpm; export Rs="i386|noarch"; export OS="RHEL"; export ARCH="32bit";;
 	("108") export ZS="8.0"; export FL=rpm; export Rs="x86_64|noarch"; export OS="RHEL"; export ARCH="64bit";;
-	("109") export ZS="8.0"; export FL=rpm_apache2.4; export Rs="x86_64|noarch"; export OS="RHEL"; export ARCH="64bit";;
+	("109") export ZS="8.0"; export FL=rpm_apache2.4; export Rs="x86_64|noarch"; export OS="RHEL-Apache_2.4"; export ARCH="64bit";;
 
 	("110") export ZS="8.5"; export FL=rpm; export Rs="i386|noarch"; export OS="RHEL"; export ARCH="32bit";;
 	("111") export ZS="8.5"; export FL=rpm; export Rs="x86_64|noarch"; export OS="RHEL"; export ARCH="64bit";;
-	("112") export ZS="8.5"; export FL=rpm_apache2.4; export Rs="x86_64|noarch"; export OS="RHEL"; export ARCH="64bit";;
-	("113") export ZS="8.5"; export FL=rpm_apache2.4; export Rs="ppc64le|noarch"; export OS="RHEL"; export ARCH="64bit";;
+	("112") export ZS="8.5"; export FL=rpm_apache2.4; export Rs="x86_64|noarch"; export OS="RHEL-Apache_2.4"; export ARCH="64bit";;
+	("113") export ZS="8.5"; export FL=rpm_apache2.4; export Rs="ppc64le|noarch"; export OS="RHEL-Apache_2.4"; export ARCH="64bit";;
 
-	("114") export ZS="9.0"; export FL=rpm_apache2.4; export Rs="x86_64|noarch"; export OS="RHEL"; export ARCH="64bit";;
-	("115") export ZS="9.0"; export FL=rpm_apache2.4; export Rs="ppc64le|noarch"; export OS="RHEL"; export ARCH="64bit";;
+	("114") export ZS="9.0"; export FL=rpm_apache2.4; export Rs="x86_64|noarch"; export OS="RHEL-Apache_2.4"; export ARCH="64bit";;
+	("115") export ZS="9.0"; export FL=rpm_apache2.4; export Rs="ppc64le|noarch"; export OS="RHEL-Apache_2.4"; export ARCH="64bit";;
 
 	# SLES
 	("203") export ZS="6.3"; export FL=sles; export Rs="ZendServer-i586|ZendServer-noarch"; export OS="SUSE"; export ARCH="32bit";;
@@ -238,8 +238,8 @@ Old repos:
    101) ZS 5.6 - 32 bit                  301) ZS 5.6 - 32 bit (openSSL 0.9.8)
    102) ZS 5.6 - 64 bit                  302) ZS 5.6 - 64 bit (openSSL 0.9.8)
 
-   201) ZS 5.6 - 32 bit
-   202) ZS 5.6 - 64 bit
+   201) ZS 5.6 - 32 bit               
+   202) ZS 5.6 - 64 bit               
 
 	("101") export ZS="5.6"; export FL=rpm; export Rs="i386|noarch"; export OS="RHEL"; export ARCH="32bit";;
 	("102") export ZS="5.6"; export FL=rpm; export Rs="x86_64|noarch"; export OS="RHEL"; export ARCH="64bit";;
