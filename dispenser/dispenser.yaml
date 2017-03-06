@@ -1,0 +1,300 @@
+# auto | manual ("manual" means sending SIGWINCH to the process)
+# (neither is implemented yet, maybe never will be)
+reload: manual
+cpu: 1
+default_hide: &defaultHide
+    - " DBG1]"
+    - " DBG2]"
+    - " DBG3]"
+default_show: &defaultShow
+    - " SYSTEM]"
+    - " ERROR]"
+    - " WARNING]"
+    - " NOTICE]"
+output_full:
+    # "file" or "bolt", maybe eventually "rrd" (round-robin-database)
+    # ("bolt" - not implemented yet)
+    type: file
+    # directory where full outputs will be stored
+    path: /usr/local/zend/var/log/full_output
+    # when to rotate full output - in megabytes
+    cap: 15
+    # write buffer in lines
+    write_buffer: 20
+    # maximum buffering time in seconds (will be flushed, even if buffer not full)
+    write_timeot: 60
+
+candy:
+    -
+        id: CODETRACING
+        input: /usr/local/zend/var/log/pipes/codetracing.log
+        output: /usr/local/zend/var/log/codetracing.log
+        # in lines
+        dump_buffer: 50
+        dump_upon:
+            - " ERROR]"
+        filters:
+            show: *defaultShow
+        full_output: false
+        # in megabytes
+        rotate_at: 10
+    -
+        id: DATACACHE
+        input: /usr/local/zend/var/log/pipes/datacache.log
+        output: /usr/local/zend/var/log/datacache.log
+        # in lines
+        dump_buffer: 50
+        dump_upon:
+            - " ERROR]"
+        filters:
+            show: *defaultShow
+        full_output: false
+        # in megabytes
+        rotate_at: 10
+    -
+        id: DEPLOYMENT
+        input: /usr/local/zend/var/log/pipes/deployment.log
+        output: /usr/local/zend/var/log/deployment.log
+        # in lines
+        dump_buffer: 50
+        dump_upon:
+            - " ERROR]"
+        filters:
+            show: *defaultShow
+        full_output: false
+        # in megabytes
+        rotate_at: 10
+    -
+        id: JOBQUEUE
+        input: /usr/local/zend/var/log/pipes/jobqueue.log
+        output: /usr/local/zend/var/log/jobqueue.log
+        # in lines
+        dump_buffer: 50
+        dump_upon:
+            - " ERROR]"
+        filters:
+            show: *defaultShow
+        full_output: false
+        # in megabytes
+        rotate_at: 10
+    -
+        id: JOBQUEUE_UI
+        input: /usr/local/zend/var/log/pipes/jobqueue_ui.log
+        output: /usr/local/zend/var/log/jobqueue_ui.log
+        # in lines
+        dump_buffer: 50
+        dump_upon:
+            - " ERROR]"
+        filters:
+            show: *defaultShow
+        full_output: false
+        # in megabytes
+        rotate_at: 10
+    -
+        id: JQD
+        input: /usr/local/zend/var/log/pipes/jqd.log
+        output: /usr/local/zend/var/log/jqd.log
+        # in lines
+        dump_buffer: 50
+        dump_upon:
+            - " ERROR]"
+        filters:
+            show: *defaultShow
+        full_output: false
+        # in megabytes
+        rotate_at: 10
+    -
+        id: MONITOR
+        input: /usr/local/zend/var/log/pipes/monitor.log
+        output: /usr/local/zend/var/log/monitor.log
+        # in lines
+        dump_buffer: 50
+        dump_upon:
+            - " ERROR]"
+        filters:
+            show: *defaultShow
+        full_output: false
+        # in megabytes
+        rotate_at: 10
+    -
+        id: MONITOR_NODE
+        input: /usr/local/zend/var/log/pipes/monitor_node.log
+        output: /usr/local/zend/var/log/monitor_node.log
+        # in lines
+        dump_buffer: 50
+        dump_upon:
+            - " ERROR]"
+        filters:
+            show: *defaultShow
+        full_output: false
+        # in megabytes
+        rotate_at: 10
+    -
+        id: MONITOR_UI
+        input: /usr/local/zend/var/log/pipes/monitor_ui.log
+        output: /usr/local/zend/var/log/monitor_ui.log
+        # in lines
+        dump_buffer: 50
+        dump_upon:
+            - " ERROR]"
+        filters:
+            show: *defaultShow
+        full_output: false
+        # in megabytes
+        rotate_at: 10
+    -
+        id: PAGECACHE
+        input: /usr/local/zend/var/log/pipes/pagecache.log
+        output: /usr/local/zend/var/log/pagecache.log
+        # in lines
+        dump_buffer: 50
+        dump_upon:
+            - " ERROR]"
+        filters:
+            show: *defaultShow
+        full_output: false
+        # in megabytes
+        rotate_at: 10
+    -
+        id: SCD
+        input: /usr/local/zend/var/log/pipes/scd.log
+        output: /usr/local/zend/var/log/scd.log
+        # in lines
+        dump_buffer: 50
+        dump_upon:
+            - " ERROR]"
+        filters:
+            show: *defaultShow
+        full_output: false
+        # in megabytes
+        rotate_at: 10
+    -
+        id: SC
+        input: /usr/local/zend/var/log/pipes/sc.log
+        output: /usr/local/zend/var/log/sc.log
+        # in lines
+        dump_buffer: 50
+        dump_upon:
+            - " ERROR]"
+        filters:
+            show: *defaultShow
+        full_output: false
+        # in megabytes
+        rotate_at: 10
+    -
+        id: STATISTICS
+        input: /usr/local/zend/var/log/pipes/statistics.log
+        output: /usr/local/zend/var/log/statistics.log
+        # in lines
+        dump_buffer: 50
+        dump_upon:
+            - " ERROR]"
+        filters:
+            show: *defaultShow
+        full_output: false
+        # in megabytes
+        rotate_at: 10
+    -
+        id: URL_INSIGHT_DAEMON
+        input: /usr/local/zend/var/log/pipes/url_insight_daemon.log
+        output: /usr/local/zend/var/log/url_insight_daemon.log
+        # in lines
+        dump_buffer: 50
+        dump_upon:
+            - " ERROR]"
+        filters:
+            show: *defaultShow
+        full_output: false
+        # in megabytes
+        rotate_at: 10
+    -
+        id: URL_INSIGHT
+        input: /usr/local/zend/var/log/pipes/url_insight.log
+        output: /usr/local/zend/var/log/url_insight.log
+        # in lines
+        dump_buffer: 50
+        dump_upon:
+            - " ERROR]"
+        filters:
+            show: *defaultShow
+        full_output: false
+        # in megabytes
+        rotate_at: 10
+    -
+        id: UTILS
+        input: /usr/local/zend/var/log/pipes/utils.log
+        output: /usr/local/zend/var/log/utils.log
+        # in lines
+        dump_buffer: 50
+        dump_upon:
+            - " ERROR]"
+        filters:
+            show: *defaultShow
+        full_output: false
+        # in megabytes
+        rotate_at: 10
+    -
+        id: ZDD
+        input: /usr/local/zend/var/log/pipes/zdd.log
+        output: /usr/local/zend/var/log/zdd.log
+        # in lines
+        dump_buffer: 50
+        dump_upon:
+            - " ERROR]"
+        filters:
+            show: *defaultShow
+        full_output: false
+        # in megabytes
+        rotate_at: 10
+    -
+        id: ZEM
+        input: /usr/local/zend/var/log/pipes/zem.log
+        output: /usr/local/zend/var/log/zem.log
+        # in lines
+        dump_buffer: 50
+        dump_upon:
+            - " ERROR]"
+        filters:
+            show: *defaultShow
+        full_output: false
+        # in megabytes
+        rotate_at: 10
+    -
+        id: ZRAY
+        input: /usr/local/zend/var/log/pipes/zray.log
+        output: /usr/local/zend/var/log/zray.log
+        # in lines
+        dump_buffer: 50
+        dump_upon:
+            - " ERROR]"
+        filters:
+            show: *defaultShow
+        full_output: false
+        # in megabytes
+        rotate_at: 10
+    -
+        id: ZSD
+        input: /usr/local/zend/var/log/pipes/zsd.log
+        output: /usr/local/zend/var/log/zsd.log
+        # in lines
+        dump_buffer: 50
+        dump_upon:
+            - " ERROR]"
+        filters:
+            show: *defaultShow
+        full_output: false
+        # in megabytes
+        rotate_at: 10
+    -
+        id: ZS_MAINTENANCE
+        input: /usr/local/zend/var/log/pipes/zs_maintenance.log
+        output: /usr/local/zend/var/log/zs_maintenance.log
+        # in lines
+        dump_buffer: 50
+        dump_upon:
+            - " ERROR]"
+        filters:
+            show: *defaultShow
+        full_output: false
+        # in megabytes
+        rotate_at: 10
