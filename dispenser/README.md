@@ -26,6 +26,8 @@ Will take path to some other configuration file as an optional parameter:
 $ ./dispenser /usr/local/zend/etc/MyDispenserConf.yaml
 ```
 
+Oh, and mind you that Go programs don't have ideomatic way of backgrounding a process. So, you may want to add `&` at the end to "daemonize" this thing.
+
 ## Configuration
 
 __WiP__
