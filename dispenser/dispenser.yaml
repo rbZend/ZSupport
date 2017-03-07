@@ -251,11 +251,7 @@ candy:
         input: /usr/local/zend/var/log/pipes/zem.log
         output: /usr/local/zend/var/log/zem.log
         # in lines
-        dump_buffer: 50
-        dump_upon:
-            - " ERROR]"
-        filters:
-            show: *defaultShow
+        dump_buffer: 1
         full_output: false
         # in megabytes
         rotate_at: 10

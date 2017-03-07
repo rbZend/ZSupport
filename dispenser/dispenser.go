@@ -93,59 +93,55 @@ func readConfig(configPath string) (config dispenserConf) {
 
 }
 
-func fileOpenOrCreate(filePathAndName string, pipe bool) (f *os.File) {
-	if pipe {
-		// check whether the pipe exists and create if it doesn't
-		fCheck, err := os.Stat(filePathAndName)
-		if os.IsNotExist(err) {
-			if _, err = os.Stat(filepath.Dir(filePathAndName)); os.IsNotExist(err) {
-				err = os.MkdirAll(filepath.Dir(filePathAndName), 0777)
-				check(err)
-			}
-			err = syscall.Mknod(filePathAndName, 0666|syscall.S_IFIFO, 0)
+func fileOpenOrCreate(filePathAndName string) (f *os.File) {
+	// try to open an existing file
+	f, err := os.OpenFile(filePathAndName, os.O_APPEND|os.O_RDWR, os.ModeAppend)
+	if err != nil {
+		// try to simply create the file
+		f, err = os.Create(filePathAndName)
+		if _, badPath := err.(*os.PathError); badPath {
+			// if create failed and error is of type PathError, create path first
+			err = os.MkdirAll(filepath.Dir(filePathAndName), 0777)
 			check(err)
-			fCheck, err = os.Stat(filePathAndName)
-			check(err)
-			err = os.Chmod(filePathAndName, 0666)
-		}
-		check(err)
-		if fCheck.Mode()&os.ModeNamedPipe == 0 {
-			panic("Input is not a named pipe :(")
-		}
-
-		// open input and output and prepare for work
-		f, err = os.OpenFile(filePathAndName, os.O_RDWR, os.ModeNamedPipe)
-		check(err)
-	} else {
-		// try to open an existing file
-		f, err := os.OpenFile(filePathAndName, os.O_APPEND|os.O_RDWR, os.ModeAppend)
-		if err != nil {
-			// try to simply create the file
+			// then retry creating the file
 			f, err = os.Create(filePathAndName)
-			if _, badPath := err.(*os.PathError); badPath {
-				// if create failed and error is of type PathError, create path first
-				err = os.MkdirAll(filepath.Dir(filePathAndName), 0777)
-				check(err)
-				// then retry creating the file
-				f, err = os.Create(filePathAndName)
-			}
-			check(err)
-			//err = os.Chmod(filePathAndName, 0666)
-			//check(err)
-
-			// right now I can't figure out
-			// why f needs to be used after definition in this case,
-			// hence this dummy sync
-			f.Sync()
 		}
+		check(err)
+		//err = os.Chmod(filePathAndName, 0666)
+		//check(err)
 	}
+	return
+}
+
+func pipeOpenOrCreate(pipePathAndName string) (f *os.File) {
+	// check whether the pipe exists and create if it doesn't
+	fCheck, err := os.Stat(pipePathAndName)
+	if os.IsNotExist(err) {
+		if _, err = os.Stat(filepath.Dir(pipePathAndName)); os.IsNotExist(err) {
+			err = os.MkdirAll(filepath.Dir(pipePathAndName), 0777)
+			check(err)
+		}
+		err = syscall.Mknod(pipePathAndName, 0666|syscall.S_IFIFO, 0)
+		check(err)
+		fCheck, err = os.Stat(pipePathAndName)
+		check(err)
+		err = os.Chmod(pipePathAndName, 0666)
+	}
+	check(err)
+	if fCheck.Mode()&os.ModeNamedPipe == 0 {
+		panic("Input is not a named pipe :(")
+	}
+
+	// open input and output and prepare for work
+	f, err = os.OpenFile(pipePathAndName, os.O_RDWR, os.ModeNamedPipe)
+	check(err)
 	return
 }
 
 func filterStream(stream inputDef) {
 	// open input and output and prepare for work
-	inFile := fileOpenOrCreate(stream.Input, true)
-	outFile := fileOpenOrCreate(stream.Output, false)
+	inFile := pipeOpenOrCreate(stream.Input)
+	outFile := fileOpenOrCreate(stream.Output)
 	defer inFile.Close()
 	defer outFile.Close()
 
@@ -243,7 +239,7 @@ func filterStream(stream inputDef) {
 				timestamp := time.Now().Format("2006-01-02__15_04_05.9999")
 				err := os.Rename(stream.Output, stream.Output+".rotated."+timestamp)
 				check(err)
-				outFile = fileOpenOrCreate(stream.Output, false)
+				outFile = fileOpenOrCreate(stream.Output)
 			}
 		}
 	}
@@ -251,7 +247,7 @@ func filterStream(stream inputDef) {
 
 func writeFullToFile(id string) {
 	fullFilePath := config.OutputFull["path"] + fmt.Sprintf("%c", os.PathSeparator) + id + "-full.output"
-	fullFile := fileOpenOrCreate(fullFilePath, false)
+	fullFile := fileOpenOrCreate(fullFilePath)
 	dur, _ := time.ParseDuration("100ms")
 	var shuttle []string
 	var contents string
@@ -298,7 +294,7 @@ func writeFullToFile(id string) {
 			check(err)
 			// TODO: makes sense to compress the rotated file
 			// go zipRotatedFile(fullFilePath+".rotated."+timestamp)
-			fullFile = fileOpenOrCreate(fullFilePath, false)
+			fullFile = fileOpenOrCreate(fullFilePath)
 		}
 
 	}
