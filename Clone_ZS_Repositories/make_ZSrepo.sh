@@ -19,32 +19,31 @@ Select the repository to copy:
 
 
  RHEL / CentOS / OEL                   Debian / Ubuntu
-.. 103) ZS 6.3 - 32 bit               .. 303) ZS 6.3 - 32 bit (openSSL 0.9.8)
-   104) ZS 6.3 - 64 bit                  304) ZS 6.3 - 32 bit (openSSL 1.0)
-.. 105) ZS 7.0 - 32 bit                  305) ZS 6.3 - 32 bit (Apache 2.4)
-   106) ZS 7.0 - 64 bit                  306) ZS 6.3 - 64 bit (openSSL 0.9.8)
-.. 107) ZS 8.0 - 32 bit                  307) ZS 6.3 - 64 bit (openSSL 1.0)
-   108) ZS 8.0 - 64 bit                  308) ZS 6.3 - 64 bit (Apache 2.4)
-   109) ZS 8.0 - 64 bit (Apache 2.4)  .. 309) ZS 7.0 - 32 bit (openSSL 0.9.8)
-.. 110) ZS 8.5 - 32 bit                  310) ZS 7.0 - 32 bit (openSSL 1.0)
-   111) ZS 8.5 - 64 bit                  311) ZS 7.0 - 32 bit (Apache 2.4)
-   112) ZS 8.5 - 64 bit (Apache 2.4)     312) ZS 7.0 - 64 bit (openSSL 0.9.8)
-   113) ZS 8.5 - power8 (LE)             313) ZS 7.0 - 64 bit (openSSL 1.0)
-.. 114) ZS 9.0 - 64 bit                  314) ZS 7.0 - 64 bit (Apache 2.4)
-   115) ZS 9.0 - power8 (LE)          .. 315) ZS 8.0 - 32 bit (openSSL 0.9.8)
-                                         316) ZS 8.0 - 32 bit (openSSL 1.0)
- SLES / OpenSUSE                         317) ZS 8.0 - 32 bit (Apache 2.4)
-   203) ZS 6.3 - 32 bit                  318) ZS 8.0 - 64 bit (openSSL 0.9.8)
-   204) ZS 6.3 - 64 bit                  319) ZS 8.0 - 64 bit (openSSL 1.0)
-   205) ZS 7.0 - 32 bit                  320) ZS 8.0 - 64 bit (Apache 2.4)
-   206) ZS 7.0 - 64 bit                  321) ZS 8.0 - power8  
-   207) ZS 8.0 - 32 bit               .. 322) ZS 8.5 - 32 bit (openSSL 1.0)
-   208) ZS 8.0 - 64 bit                  323) ZS 8.5 - 32 bit (Apache 2.4)
-   209) ZS 8.5 - 32 bit                  324) ZS 8.5 - 64 bit (openSSL 1.0)
-   210) ZS 8.5 - 64 bit                  325) ZS 8.5 - 64 bit (Apache 2.4)
-                                         326) ZS 8.5 - power8 (LE)
-                                      .. 327) ZS 9.0 - 64 bit
-                                         328) ZS 9.0 - power8 (LE)
+.. 105) ZS 7.0 - 32 bit               .. 309) ZS 7.0 - 32 bit (openSSL 0.9.8)
+   106) ZS 7.0 - 64 bit                  310) ZS 7.0 - 32 bit (openSSL 1.0)
+.. 107) ZS 8.0 - 32 bit                  311) ZS 7.0 - 32 bit (Apache 2.4)
+   108) ZS 8.0 - 64 bit                  312) ZS 7.0 - 64 bit (openSSL 0.9.8)
+   109) ZS 8.0 - 64 bit (Apache 2.4)     313) ZS 7.0 - 64 bit (openSSL 1.0)
+.. 110) ZS 8.5 - 32 bit                  314) ZS 7.0 - 64 bit (Apache 2.4)
+   111) ZS 8.5 - 64 bit               .. 315) ZS 8.0 - 32 bit (openSSL 0.9.8)
+   112) ZS 8.5 - 64 bit (Apache 2.4)     316) ZS 8.0 - 32 bit (openSSL 1.0)
+   113) ZS 8.5 - power8 (LE)             317) ZS 8.0 - 32 bit (Apache 2.4)
+.. 114) ZS 9.0 - 64 bit                  318) ZS 8.0 - 64 bit (openSSL 0.9.8)
+   115) ZS 9.0 - power8 (LE)             319) ZS 8.0 - 64 bit (openSSL 1.0)
+.. 116) ZS 9.1 - 64 bit                  320) ZS 8.0 - 64 bit (Apache 2.4)
+   117) ZS 9.1 - power8 (LE)             321) ZS 8.0 - power8
+                                      .. 322) ZS 8.5 - 32 bit (openSSL 1.0)
+ SLES / OpenSUSE                         323) ZS 8.5 - 32 bit (Apache 2.4)
+                                         324) ZS 8.5 - 64 bit (openSSL 1.0)
+                                         325) ZS 8.5 - 64 bit (Apache 2.4)
+   205) ZS 7.0 - 32 bit                  326) ZS 8.5 - power8 (LE)
+   206) ZS 7.0 - 64 bit               .. 327) ZS 9.0 - 64 bit
+   207) ZS 8.0 - 32 bit                  328) ZS 9.0 - power8 (LE)
+   208) ZS 8.0 - 64 bit               .. 329) ZS 9.1 - 64 bit
+   209) ZS 8.5 - 32 bit                  330) ZS 9.1 - power8 (LE)
+   210) ZS 8.5 - 64 bit
+
+
    c) Cancel
 
 EOS
@@ -57,9 +56,6 @@ fi
 
 case $choice in
 	# RHEL
-	("103") export ZS="6.3"; export FL=rpm; export Rs="i386|noarch"; export OS="RHEL"; export ARCH="32bit";;
-	("104") export ZS="6.3"; export FL=rpm; export Rs="x86_64|noarch"; export OS="RHEL"; export ARCH="64bit";;
-
 	("105") export ZS="7.0"; export FL=rpm; export Rs="i386|noarch"; export OS="RHEL"; export ARCH="32bit";;
 	("106") export ZS="7.0"; export FL=rpm; export Rs="x86_64|noarch"; export OS="RHEL"; export ARCH="64bit";;
 
@@ -70,15 +66,15 @@ case $choice in
 	("110") export ZS="8.5"; export FL=rpm; export Rs="i386|noarch"; export OS="RHEL"; export ARCH="32bit";;
 	("111") export ZS="8.5"; export FL=rpm; export Rs="x86_64|noarch"; export OS="RHEL"; export ARCH="64bit";;
 	("112") export ZS="8.5"; export FL=rpm_apache2.4; export Rs="x86_64|noarch"; export OS="RHEL-Apache_2.4"; export ARCH="64bit";;
-	("113") export ZS="8.5"; export FL=rpm_apache2.4; export Rs="ppc64le|noarch"; export OS="RHEL-Apache_2.4"; export ARCH="64bit";;
+	("113") export ZS="8.5"; export FL=rpm_apache2.4; export Rs="ppc64le|noarch"; export OS="RHEL-Apache_2.4"; export ARCH="ppc64";;
 
 	("114") export ZS="9.0"; export FL=rpm_apache2.4; export Rs="x86_64|noarch"; export OS="RHEL-Apache_2.4"; export ARCH="64bit";;
-	("115") export ZS="9.0"; export FL=rpm_apache2.4; export Rs="ppc64le|noarch"; export OS="RHEL-Apache_2.4"; export ARCH="64bit";;
+	("115") export ZS="9.0"; export FL=rpm_apache2.4; export Rs="ppc64le|noarch"; export OS="RHEL-Apache_2.4"; export ARCH="ppc64";;
+
+	("116") export ZS="9.1"; export FL=rpm_apache2.4; export Rs="x86_64|noarch"; export OS="RHEL-Apache_2.4"; export ARCH="64bit";;
+	("117") export ZS="9.1"; export FL=rpm_apache2.4; export Rs="ppc64le|noarch"; export OS="RHEL-Apache_2.4"; export ARCH="ppc64";;
 
 	# SLES
-	("203") export ZS="6.3"; export FL=sles; export Rs="ZendServer-i586|ZendServer-noarch"; export OS="SUSE"; export ARCH="32bit";;
-	("204") export ZS="6.3"; export FL=sles; export Rs="ZendServer-x86_64|ZendServer-noarch"; export OS="SUSE"; export ARCH="64bit";;
-
 	("205") export ZS="7.0"; export FL=sles; export Rs="i586|noarch"; export OS="SUSE"; export ARCH="32bit";;
 	("206") export ZS="7.0"; export FL=sles; export Rs="x86_64|noarch"; export OS="SUSE"; export ARCH="64bit";;
 
@@ -89,14 +85,6 @@ case $choice in
 	("210") export ZS="8.5"; export FL=sles; export Rs="x86_64|noarch"; export OS="SUSE"; export ARCH="64bit";;
 
 	# Debian
-	("303") export ZS="6.3"; export FL=deb; export Rs=".*_all.deb$|.*_i386.deb$|dists/.*"; export OS="Debian"; export ARCH="32bit";;
-	("304") export ZS="6.3"; export FL=deb_ssl1.0; export Rs=".*_all.deb$|.*_i386.deb$|dists/.*"; export OS="Debian-openSSL_1.0"; export ARCH="32bit";;
-	("305") export ZS="6.3"; export FL=deb_apache2.4; export Rs=".*_all.deb$|.*_i386.deb$|dists/.*"; export OS="Debian-Apache_2.4"; export ARCH="32bit";;
-
-	("306") export ZS="6.3"; export FL=deb; export Rs=".*_all.deb$|.*_amd64.deb$|dists/.*"; export OS="Debian"; export ARCH="64bit";;
-	("307") export ZS="6.3"; export FL=deb_ssl1.0; export Rs=".*_all.deb$|.*_amd64.deb$|dists/.*"; export OS="Debian-openSSL_1.0"; export ARCH="64bit";;
-	("308") export ZS="6.3"; export FL=deb_apache2.4; export Rs=".*_all.deb$|.*_amd64.deb$|dists/.*"; export OS="Debian-Apache_2.4"; export ARCH="64bit";;
-
 	("309") export ZS="7.0"; export FL=deb; export Rs=".*_all.deb$|.*_i386.deb$|dists/.*"; export OS="Debian"; export ARCH="32bit";;
 	("310") export ZS="7.0"; export FL=deb_ssl1.0; export Rs=".*_all.deb$|.*_i386.deb$|dists/.*"; export OS="Debian-openSSL_1.0"; export ARCH="32bit";;
 	("311") export ZS="7.0"; export FL=deb_apache2.4; export Rs=".*_all.deb$|.*_i386.deb$|dists/.*"; export OS="Debian-Apache_2.4"; export ARCH="32bit";;
@@ -113,16 +101,19 @@ case $choice in
 	("319") export ZS="8.0"; export FL=deb_ssl1.0; export Rs=".*_all.deb$|.*_amd64.deb$|dists/.*"; export OS="Debian-openSSL_1.0"; export ARCH="64bit";;
 	("320") export ZS="8.0"; export FL=deb_apache2.4; export Rs=".*_all.deb$|.*_amd64.deb$|dists/.*"; export OS="Debian-Apache_2.4"; export ARCH="64bit";;
 
-	("321") export ZS="8.0"; export FL=deb_power8; export Rs=".*_all.deb$|.*_ppc64el.deb$|dists/.*"; export OS="Debian-power8"; export ARCH="64bit";;
+	("321") export ZS="8.0"; export FL=deb_power8; export Rs=".*_all.deb$|.*_ppc64el.deb$|dists/.*"; export OS="Debian-power8"; export ARCH="ppc64";;
 
 	("322") export ZS="8.5"; export FL=deb_ssl1.0; export Rs=".*_all.deb$|.*_i386.deb$|dists/.*"; export OS="Debian-openSSL_1.0"; export ARCH="32bit";;
 	("323") export ZS="8.5"; export FL=deb_apache2.4; export Rs=".*_all.deb$|.*_i386.deb$|dists/.*"; export OS="Debian-Apache_2.4"; export ARCH="32bit";;
 	("324") export ZS="8.5"; export FL=deb_ssl1.0; export Rs=".*_all.deb$|.*_amd64.deb$|dists/.*"; export OS="Debian-openSSL_1.0"; export ARCH="64bit";;
 	("325") export ZS="8.5"; export FL=deb_apache2.4; export Rs=".*_all.deb$|.*_amd64.deb$|dists/.*"; export OS="Debian-Apache_2.4"; export ARCH="64bit";;
-	("326") export ZS="8.5"; export FL=deb_power8; export Rs=".*_all.deb$|.*_ppc64el.deb$|dists/.*"; export OS="Debian-power8"; export ARCH="64bit";;
+	("326") export ZS="8.5"; export FL=deb_power8; export Rs=".*_all.deb$|.*_ppc64el.deb$|dists/.*"; export OS="Debian-power8"; export ARCH="ppc64";;
 
 	("327") export ZS="9.0"; export FL=deb_apache2.4; export Rs=".*_all.deb$|.*_amd64.deb$|dists/.*"; export OS="Debian-Apache_2.4"; export ARCH="64bit";;
-	("328") export ZS="9.0"; export FL=deb_power8; export Rs=".*_all.deb$|.*_ppc64el.deb$|dists/.*"; export OS="Debian-power8"; export ARCH="64bit";;
+	("328") export ZS="9.0"; export FL=deb_power8; export Rs=".*_all.deb$|.*_ppc64el.deb$|dists/.*"; export OS="Debian-power8"; export ARCH="ppc64";;
+
+	("329") export ZS="9.1"; export FL=deb_apache2.4; export Rs=".*_all.deb$|.*_amd64.deb$|dists/.*"; export OS="Debian-Apache_2.4"; export ARCH="64bit";;
+	("330") export ZS="9.1"; export FL=deb_power8; export Rs=".*_all.deb$|.*_ppc64el.deb$|dists/.*"; export OS="Debian-power8"; export ARCH="ppc64";;
 
 	(""|"c")  echo "  Exiting..." ; exit 0;;
 	(*) echo "  Your input was not recognised." ; echo "  Exiting..." ; exit 1
@@ -237,18 +228,35 @@ Old repos:
 
    101) ZS 5.6 - 32 bit                  301) ZS 5.6 - 32 bit (openSSL 0.9.8)
    102) ZS 5.6 - 64 bit                  302) ZS 5.6 - 64 bit (openSSL 0.9.8)
+.. 103) ZS 6.3 - 32 bit               .. 303) ZS 6.3 - 32 bit (openSSL 0.9.8)
+   104) ZS 6.3 - 64 bit                  304) ZS 6.3 - 32 bit (openSSL 1.0)
+                                         305) ZS 6.3 - 32 bit (Apache 2.4)
+   201) ZS 5.6 - 32 bit                  306) ZS 6.3 - 64 bit (openSSL 0.9.8)
+   202) ZS 5.6 - 64 bit                  307) ZS 6.3 - 64 bit (openSSL 1.0)
+   203) ZS 6.3 - 32 bit                  308) ZS 6.3 - 64 bit (Apache 2.4)
+   204) ZS 6.3 - 64 bit
 
-   201) ZS 5.6 - 32 bit               
-   202) ZS 5.6 - 64 bit               
+
 
 	("101") export ZS="5.6"; export FL=rpm; export Rs="i386|noarch"; export OS="RHEL"; export ARCH="32bit";;
 	("102") export ZS="5.6"; export FL=rpm; export Rs="x86_64|noarch"; export OS="RHEL"; export ARCH="64bit";;
+	("103") export ZS="6.3"; export FL=rpm; export Rs="i386|noarch"; export OS="RHEL"; export ARCH="32bit";;
+	("104") export ZS="6.3"; export FL=rpm; export Rs="x86_64|noarch"; export OS="RHEL"; export ARCH="64bit";;
 
 	("201") export ZS="5.6"; export FL=sles; export Rs="ZendServer-i586|ZendServer-noarch"; export OS="SUSE"; export ARCH="32bit";;
 	("202") export ZS="5.6"; export FL=sles; export Rs="ZendServer-x86_64|ZendServer-noarch"; export OS="SUSE"; export ARCH="64bit";;
+	("203") export ZS="6.3"; export FL=sles; export Rs="ZendServer-i586|ZendServer-noarch"; export OS="SUSE"; export ARCH="32bit";;
+	("204") export ZS="6.3"; export FL=sles; export Rs="ZendServer-x86_64|ZendServer-noarch"; export OS="SUSE"; export ARCH="64bit";;
 
 	("301") export ZS="5.6"; export FL=deb; export Rs=".*_all.deb$|.*_i386.deb$|dists/.*"; export OS="Debian"; export ARCH="32bit";;
 	("302") export ZS="5.6"; export FL=deb; export Rs=".*_all.deb$|.*_amd64.deb$|dists/.*"; export OS="Debian"; export ARCH="64bit";;
+	("303") export ZS="6.3"; export FL=deb; export Rs=".*_all.deb$|.*_i386.deb$|dists/.*"; export OS="Debian"; export ARCH="32bit";;
+	("304") export ZS="6.3"; export FL=deb_ssl1.0; export Rs=".*_all.deb$|.*_i386.deb$|dists/.*"; export OS="Debian-openSSL_1.0"; export ARCH="32bit";;
+	("305") export ZS="6.3"; export FL=deb_apache2.4; export Rs=".*_all.deb$|.*_i386.deb$|dists/.*"; export OS="Debian-Apache_2.4"; export ARCH="32bit";;
+	("306") export ZS="6.3"; export FL=deb; export Rs=".*_all.deb$|.*_amd64.deb$|dists/.*"; export OS="Debian"; export ARCH="64bit";;
+	("307") export ZS="6.3"; export FL=deb_ssl1.0; export Rs=".*_all.deb$|.*_amd64.deb$|dists/.*"; export OS="Debian-openSSL_1.0"; export ARCH="64bit";;
+	("308") export ZS="6.3"; export FL=deb_apache2.4; export Rs=".*_all.deb$|.*_amd64.deb$|dists/.*"; export OS="Debian-Apache_2.4"; export ARCH="64bit";;
+
 
 ================================================
 EOS
