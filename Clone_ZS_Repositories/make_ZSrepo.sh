@@ -28,12 +28,13 @@ Select the repository to copy:
 .. 116) ZS 9.1 - 64 bit                  328) ZS 9.0 - power8 (LE)
    117) ZS 9.1 - power8 (LE)          .. 329) ZS 9.1 - 64 bit
 .. 118) ZS 2018.0 - 64 bit               330) ZS 9.1 - power8 (LE)
-   119) ZS 2018.0 - power8 (LE)       .. 331) ZS 2018.0 - Apache 2.4
-                                         332) ZS 2018.0 - Debian 9
- SLES / OpenSUSE                         333) ZS 2018.0 - openSSL 1.1 (*)
-.. 209) ZS 8.5 - 32 bit                  334) ZS 2018.0 - power8 (LE)
-   210) ZS 8.5 - 64 bit
-                                              (*) - Ubuntu 18.04
+   119) ZS 2018.0 - power8 (LE)       .. 331) ZS 2018.0 - Ubuntu 16/Apache 2.4
+.. 120) ZS 2019.0 - 64 bit               332) ZS 2018.0 - Debian 9
+                                         333) ZS 2018.0 - Ubuntu 18/openSSL 1.1
+                                         334) ZS 2018.0 - power8 (LE)
+                                      .. 335) ZS 2019.0 - Ubuntu 16/Apache 2.4
+                                         336) ZS 2019.0 - Debian 9
+                                         337) ZS 2019.0 - Ubuntu 18/openSSL 1.1
 
    c) Cancel
 
@@ -61,9 +62,7 @@ case $choice in
 	("118") export ZS="2018.0"; export FL=rpm_apache2.4; export Rs="x86_64|noarch"; export OS="RHEL-Apache_2.4"; export ARCH="64bit";;
 	("119") export ZS="2018.0"; export FL=rpm_apache2.4; export Rs="ppc64le|noarch"; export OS="RHEL-Apache_2.4"; export ARCH="ppc64";;
 
-	# SLES
-	("209") export ZS="8.5"; export FL=sles; export Rs="i586|noarch"; export OS="SUSE"; export ARCH="32bit";;
-	("210") export ZS="8.5"; export FL=sles; export Rs="x86_64|noarch"; export OS="SUSE"; export ARCH="64bit";;
+	("120") export ZS="2019.0"; export FL=rpm_apache2.4; export Rs="x86_64|noarch"; export OS="RHEL-Apache_2.4"; export ARCH="64bit";;
 
 	# Debian
 	("322") export ZS="8.5"; export FL=deb_ssl1.0; export Rs=".*_all.deb$|.*_i386.deb$|dists/.*"; export OS="Debian-openSSL_1.0"; export ARCH="32bit";;
@@ -78,10 +77,15 @@ case $choice in
 	("329") export ZS="9.1"; export FL=deb_apache2.4; export Rs=".*_all.deb$|.*_amd64.deb$|dists/.*"; export OS="Debian-Apache_2.4"; export ARCH="64bit";;
 	("330") export ZS="9.1"; export FL=deb_power8; export Rs=".*_all.deb$|.*_ppc64el.deb$|dists/.*"; export OS="Debian-power8"; export ARCH="ppc64";;
 
-	("331") export ZS="2018.0"; export FL=deb_apache2.4; export Rs=".*_all.deb$|.*_amd64.deb$|dists/.*"; export OS="Debian-Apache_2.4"; export ARCH="64bit";;
-	("332") export ZS="2018.0"; export FL=deb_debian9; export Rs=".*_all.deb$|.*_amd64.deb$|dists/.*"; export OS="Debian-Debian_9"; export ARCH="ppc64";;
-	("333") export ZS="2018.0"; export FL=deb_ssl1.1; export Rs=".*_all.deb$|.*_amd64.deb$|dists/.*"; export OS="Debian-openSSL_1.1"; export ARCH="64bit";;
-	("334") export ZS="2018.0"; export FL=deb_power8; export Rs=".*_all.deb$|.*_ppc64el.deb$|dists/.*"; export OS="Debian-power8"; export ARCH="ppc64";;
+	("331") export ZS="2018.0"; export FL=deb_apache2.4; export Rs=".*_all.deb$|.*_amd64.deb$|dists/.*"; export OS="Ubuntu_16-Apache_2.4"; export ARCH="64bit";;
+	("332") export ZS="2018.0"; export FL=deb_debian9; export Rs=".*_all.deb$|.*_amd64.deb$|dists/.*"; export OS="Debian_9"; export ARCH="64bit";;
+	("333") export ZS="2018.0"; export FL=deb_ssl1.1; export Rs=".*_all.deb$|.*_amd64.deb$|dists/.*"; export OS="Ubuntu_18-openSSL_1.1"; export ARCH="64bit";;
+	("334") export ZS="2018.0"; export FL=deb_power8; export Rs=".*_all.deb$|.*_ppc64el.deb$|dists/.*"; export OS="Ubuntu-power8"; export ARCH="ppc64";;
+
+	("335") export ZS="2019.0"; export FL=deb_apache2.4; export Rs=".*_all.deb$|.*_amd64.deb$|dists/.*"; export OS="Ubuntu_16-Apache_2.4"; export ARCH="64bit";;
+	("336") export ZS="2019.0"; export FL=deb_debian9; export Rs=".*_all.deb$|.*_amd64.deb$|dists/.*"; export OS="Debian_9"; export ARCH="64bit";;
+	("337") export ZS="2019.0"; export FL=deb_ssl1.1; export Rs=".*_all.deb$|.*_amd64.deb$|dists/.*"; export OS="Ubuntu_18-openSSL_1.1"; export ARCH="64bit";;
+
 
 	(""|"c")  echo "  Exiting..." ; exit 0;; 
 	(*) echo "  Your input was not recognised." ; echo "  Exiting..." ; exit 1
@@ -226,8 +230,8 @@ Old repos:
    206) ZS 7.0 - 64 bit                  316) ZS 8.0 - 32 bit (openSSL 1.0)
    207) ZS 8.0 - 32 bit                  317) ZS 8.0 - 32 bit (Apache 2.4)
    208) ZS 8.0 - 64 bit                  318) ZS 8.0 - 64 bit (openSSL 0.9.8)
-                                         319) ZS 8.0 - 64 bit (openSSL 1.0)
-                                         320) ZS 8.0 - 64 bit (Apache 2.4)
+   209) ZS 8.5 - 32 bit                  319) ZS 8.0 - 64 bit (openSSL 1.0)
+   210) ZS 8.5 - 64 bit                  320) ZS 8.0 - 64 bit (Apache 2.4)
                                          321) ZS 8.0 - power8
                                          
 
@@ -250,6 +254,8 @@ Old repos:
 	("206") export ZS="7.0"; export FL=sles; export Rs="x86_64|noarch"; export OS="SUSE"; export ARCH="64bit";;
 	("207") export ZS="8.0"; export FL=sles; export Rs="i586|noarch"; export OS="SUSE"; export ARCH="32bit";;
 	("208") export ZS="8.0"; export FL=sles; export Rs="x86_64|noarch"; export OS="SUSE"; export ARCH="64bit";;
+	("209") export ZS="8.5"; export FL=sles; export Rs="i586|noarch"; export OS="SUSE"; export ARCH="32bit";;
+	("210") export ZS="8.5"; export FL=sles; export Rs="x86_64|noarch"; export OS="SUSE"; export ARCH="64bit";;
 
 	("301") export ZS="5.6"; export FL=deb; export Rs=".*_all.deb$|.*_i386.deb$|dists/.*"; export OS="Debian"; export ARCH="32bit";;
 	("302") export ZS="5.6"; export FL=deb; export Rs=".*_all.deb$|.*_amd64.deb$|dists/.*"; export OS="Debian"; export ARCH="64bit";;
